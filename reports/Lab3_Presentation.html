@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lab 3 Group 4</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lab 3 Group 4</h1>
+</header>
+<h1 id="báo-cáo-lab-3-get-started-with-hugging-face">BÁO CÁO LAB 3 – GET
+STARTED WITH HUGGING FACE</h1>
+<p><strong>Học phần:</strong> Deep Learning<br />
+<strong>Nhóm thực hiện:</strong> Nhóm 4</p>
+<h2 id="mục-tiêu">1. Mục tiêu</h2>
+<p>Lab 3 gồm hai bài thực hành. Exercise 1 tìm hiểu cách sử dụng một mô
+hình phân tích cảm xúc có sẵn trên Hugging Face Hub. Exercise 2 thực
+hành fine-tuning mô hình ngôn ngữ pretrained cho bài toán phân loại văn
+bản nhị phân.</p>
+<p>Nhóm chọn DistilBERT vì đây là phiên bản rút gọn của BERT, thuận tiện
+để thử nghiệm với tài nguyên máy tính có hạn. Dataset IMDb gồm các nhận
+xét phim được gán nhãn tiêu cực (0) hoặc tích cực (1).</p>
+<h2 id="exercise-1-sentiment-analysis">2. Exercise 1 – Sentiment
+Analysis</h2>
+<h3 id="cài-đặt-và-tải-mô-hình">2.1. Cài đặt và tải mô hình</h3>
+<p>Thư viện sử dụng là <code>transformers</code> và <code>torch</code>.
+Nhóm sử dụng checkpoint
+<code>distilbert/distilbert-base-uncased-finetuned-sst-2-english</code>,
+đã được fine-tune cho phân tích cảm xúc.</p>
+<p>Tokenizer và mô hình được tải bằng
+<code>AutoTokenizer.from_pretrained()</code> và
+<code>AutoModelForSequenceClassification.from_pretrained()</code>.</p>
+<h3 id="tokenization">2.2. Tokenization</h3>
+<p>Câu thử nghiệm:</p>
+<blockquote>
+<p>I love this movie. It is amazing!</p>
+</blockquote>
+<p>Tokenizer chuyển câu thành <code>input_ids</code> và
+<code>attention_mask</code>. <code>input_ids</code> là mã số của các
+token; <code>attention_mask</code> cho biết vị trí token cần được xử lý.
+Nhóm sử dụng <code>truncation=True</code> và giới hạn tối đa 512
+token.</p>
+<p>Các token đặc biệt như <code>[CLS]</code> và <code>[SEP]</code> được
+tokenizer bổ sung. Tensor đầu vào có dạng
+<code>(batch_size, sequence_length)</code>. Với một câu minh họa,
+<code>batch_size = 1</code>; độ dài chuỗi phụ thuộc số token sau khi xử
+lý.</p>
+<h3 id="dự-đoán-cảm-xúc">2.3. Dự đoán cảm xúc</h3>
+<p>Mô hình trả về hai giá trị logits ứng với hai lớp. Hàm softmax chuyển
+logits thành điểm xác suất; lớp có điểm lớn hơn được chọn làm kết quả dự
+đoán.</p>
+<p>Sử dụng <code>model.eval()</code> và <code>torch.no_grad()</code> để
+chạy dự đoán mà không cập nhật trọng số. Code được trình bày trong
+<code>notebooks/02_exercise1_sentiment.ipynb</code> và
+<code>src/sentiment.py</code>.</p>
+<p>Điểm softmax thể hiện mức tự tin tương đối giữa hai lớp, không bảo
+đảm dự đoán luôn chính xác trên văn bản khác miền dữ liệu. Exercise 1
+chỉ suy luận nên không tạo <code>Trainer</code> và không cập nhật trọng
+số.</p>
+<h2 id="exercise-2-fine-tuning-a-pretrained-model">3. Exercise 2 –
+Fine-tuning a Pretrained Model</h2>
+<h3 id="dataset">3.1. Dataset</h3>
+<p>Dataset được sử dụng là <code>stanfordnlp/imdb</code>, gồm hai lớp
+cảm xúc. Bộ dữ liệu có 25.000 mẫu train gốc và 25.000 mẫu test gốc.</p>
+<p>Với cấu hình thử nghiệm trên CPU, nhóm sử dụng 1.000 mẫu train, 200
+mẫu validation và 200 mẫu test. Train và validation được lấy từ hai phần
+riêng biệt của tập train gốc; test được lấy từ split test.</p>
+<p>Train và validation được tạo bằng <code>train_test_split</code> trên
+tập train gốc với <code>seed=42</code>, có phân tầng theo nhãn. Sau đó,
+tập con được lấy cân bằng để mỗi lớp có 500 mẫu train và 100 mẫu
+validation. Dữ liệu test không được dùng trong bước chọn checkpoint.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Tập dữ liệu</th>
+<th style="text-align: right;">Số mẫu</th>
+<th>Mục đích</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Train</td>
+<td style="text-align: right;">1.000</td>
+<td>Cập nhật trọng số mô hình</td>
+</tr>
+<tr class="even">
+<td>Validation</td>
+<td style="text-align: right;">200</td>
+<td>Theo dõi loss và chọn checkpoint</td>
+</tr>
+<tr class="odd">
+<td>Test</td>
+<td style="text-align: right;">200</td>
+<td>Đánh giá sau khi kết thúc huấn luyện</td>
+</tr>
+</tbody>
+</table>
+<h3 id="eda-và-pca">3.2. EDA và PCA</h3>
+<p>Trước khi huấn luyện, nhóm khảo sát:</p>
+<ul>
+<li>Số lượng văn bản và tỉ lệ giữa hai nhãn.</li>
+<li>Độ dài văn bản tính theo số từ.</li>
+<li>Giá trị thiếu, văn bản rỗng và văn bản trùng.</li>
+<li>Phân bố văn bản trên hai thành phần chính PCA sau khi vector hóa
+TF-IDF.</li>
+</ul>
+<p>Các bước được lập trình trong
+<code>notebooks/01_eda_pca.ipynb</code>. PCA chỉ phục vụ mục đích trực
+quan hóa; đầu vào của DistilBERT vẫn được tạo bằng tokenizer của mô
+hình.</p>
+<p>Kết quả kiểm tra dữ liệu train IMDb trên máy nhóm ghi nhận 25.000 văn
+bản, gồm 12.500 nhãn tiêu cực và 12.500 nhãn tích cực. Không có giá trị
+thiếu hoặc văn bản rỗng; có 96 dòng trùng theo nội dung (0,384%). Cần
+xem xét các dòng trùng và nhãn tương ứng trước khi quyết định loại bỏ,
+tránh làm thay đổi phân phối lớp một cách không kiểm soát.</p>
+<p>Về PCA, văn bản trước hết được biểu diễn thành vector TF-IDF. Trên
+tối đa 600 mẫu được chọn từ tập train, PCA chiếu dữ liệu về hai thành
+phần chính để quan sát mức độ chồng lấn giữa hai nhóm nhãn. Hai trục PCA
+không đồng nghĩa với hai giá trị cảm xúc; đây chỉ là cách quan sát
+phương sai trong không gian đặc trưng. Biểu đồ và tỉ lệ phương sai giải
+thích cần được thu từ kết quả chạy notebook, không suy luận trước từ số
+liệu lớp.</p>
+<h3 id="tiền-xử-lý">3.3. Tiền xử lý</h3>
+<p>Văn bản được tokenize với <code>AutoTokenizer</code> và giới hạn
+<code>max_length=256</code>. <code>DataCollatorWithPadding</code> tự
+động padding đến độ dài lớn nhất của từng batch nhằm hạn chế tính toán
+không cần thiết.</p>
+<p>Việc dùng <code>truncation=True</code> giảm chi phí bộ nhớ cho các
+review dài nhưng có thể cắt mất thông tin nằm sau 256 token. Đây là đánh
+đổi giữa tốc độ huấn luyện và mức độ giữ lại nội dung văn bản. Nhóm
+không xóa stopwords hay stemming trước khi đưa vào DistilBERT vì
+tokenizer và encoder pretrained đã được thiết kế để xử lý ngữ cảnh từ
+chuỗi token.</p>
+<h3 id="mô-hình-và-tham-số-huấn-luyện">3.4. Mô hình và tham số huấn
+luyện</h3>
+<p>Nhóm sử dụng <code>distilbert/distilbert-base-uncased</code> và bổ
+sung đầu phân loại hai nhãn qua
+<code>AutoModelForSequenceClassification</code>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Tham số</th>
+<th>Giá trị</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Model</td>
+<td>DistilBERT base uncased</td>
+</tr>
+<tr class="even">
+<td>Seed</td>
+<td>42</td>
+</tr>
+<tr class="odd">
+<td>Epoch</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Batch size</td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<td>Learning rate</td>
+<td>2e-5</td>
+</tr>
+<tr class="even">
+<td>Weight decay</td>
+<td>0.01</td>
+</tr>
+<tr class="odd">
+<td>Max length</td>
+<td>256</td>
+</tr>
+<tr class="even">
+<td>Loss</td>
+<td>Cross-entropy cho hai lớp</td>
+</tr>
+</tbody>
+</table>
+<p><code>Trainer</code> nhận model, dữ liệu train, validation,
+tokenizer, data collator và hàm tính metrics. Sau mỗi epoch, mô hình
+được đánh giá trên validation.</p>
+<p><strong>Cross-entropy loss</strong> được tối ưu bằng AdamW. Đối với
+một mẫu có nhãn thật (y), loss là (-p_y), trong đó (p_y) là xác suất
+softmax của lớp đúng. Backpropagation tính gradient theo loss, sau đó
+optimizer cập nhật trọng số. <code>weight_decay</code> được dùng để hạn
+chế việc trọng số tăng quá lớn.</p>
+<p>Khi lưu checkpoint, pipeline trong <code>src/train.py</code> ưu tiên
+validation loss thấp nhất và khôi phục checkpoint đã chọn trước khi đánh
+giá test. Cách lựa chọn này cần được giữ nhất quán giữa các lần chạy.
+Trong notebook thực nghiệm gốc, checkpoint được chọn theo validation
+accuracy, do đó kết quả hai quy trình không nên ghép chung.</p>
+<h3 id="đánh-giá">3.5. Đánh giá</h3>
+<p>Các chỉ số được dùng gồm accuracy, precision, recall, F1-score và
+validation loss. Chỉ số test được tính sau khi chọn checkpoint để tránh
+sử dụng tập test trong quá trình điều chỉnh mô hình.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Chỉ số</th>
+<th>Công thức</th>
+<th>Ý nghĩa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Accuracy</td>
+<td><code>(TP + TN) / (TP + TN + FP + FN)</code></td>
+<td>Tỷ lệ dự đoán đúng trên toàn bộ mẫu</td>
+</tr>
+<tr class="even">
+<td>Precision (+)</td>
+<td><code>TP / (TP + FP)</code></td>
+<td>Trong các mẫu dự đoán Positive, tỷ lệ đúng</td>
+</tr>
+<tr class="odd">
+<td>Recall (+)</td>
+<td><code>TP / (TP + FN)</code></td>
+<td>Trong các mẫu Positive thật, tỷ lệ tìm được</td>
+</tr>
+<tr class="even">
+<td>F1 (+)</td>
+<td><code>2 × Precision × Recall / (Precision + Recall)</code></td>
+<td>Trung bình điều hòa giữa precision và recall</td>
+</tr>
+</tbody>
+</table>
+<p>Trong bài toán này, lớp Positive được đặt là nhãn 1. Nếu dữ liệu mất
+cân bằng, accuracy có thể gây hiểu nhầm, vì vậy nhóm sử dụng thêm
+precision, recall, F1 và confusion matrix để phân tích lỗi theo lớp.</p>
+<p>Trong lần thực nghiệm đã lưu ở notebook gốc, mô hình đạt các kết quả
+sau:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Chỉ số test</th>
+<th style="text-align: right;">Kết quả</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Số mẫu</td>
+<td style="text-align: right;">200</td>
+</tr>
+<tr class="even">
+<td>Accuracy</td>
+<td style="text-align: right;">89.00%</td>
+</tr>
+<tr class="odd">
+<td>Precision lớp POSITIVE</td>
+<td style="text-align: right;">89.38%</td>
+</tr>
+<tr class="even">
+<td>Recall lớp POSITIVE</td>
+<td style="text-align: right;">90.99%</td>
+</tr>
+<tr class="odd">
+<td>F1-score lớp POSITIVE</td>
+<td style="text-align: right;">90.18%</td>
+</tr>
+</tbody>
+</table>
+<p>Ma trận nhầm lẫn của lần thực nghiệm này:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Nhãn thật / Dự đoán</th>
+<th style="text-align: right;">NEGATIVE</th>
+<th style="text-align: right;">POSITIVE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>NEGATIVE</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td>POSITIVE</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">101</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img src="../outputs/exercise2/confusion_matrix.png"
+alt="Ma trận nhầm lẫn" />
+<figcaption aria-hidden="true">Ma trận nhầm lẫn</figcaption>
+</figure>
+<p>Kết quả trên được lấy từ
+<code>outputs/exercise2/test_metrics.json</code> và
+<code>outputs/exercise2/confusion_matrix.csv</code> thuộc lần thực
+nghiệm lưu trong notebook gốc. Pipeline module tại
+<code>src/train.py</code> sử dụng <code>eval_loss</code> để chọn
+checkpoint; cần chạy pipeline này để có kết quả riêng.</p>
+<p>Từ confusion matrix, có 12 mẫu Negative bị dự đoán nhầm thành
+Positive (false positive) và 10 mẫu Positive bị dự đoán nhầm thành
+Negative (false negative). Tổng cộng mô hình sai 22/200 mẫu. Vì số mẫu
+test giới hạn, nên cần tránh kết luận rằng 89% là độ chính xác ổn định
+cho mọi đánh giá phim.</p>
+<h3 id="lưu-kết-quả-và-khả-năng-tái-lập">3.6. Lưu kết quả và khả năng
+tái lập</h3>
+<p>Các module được tổ chức để tách trách nhiệm: <code>data.py</code>
+chuẩn bị dữ liệu, <code>model.py</code> khởi tạo tokenizer và mô hình,
+<code>train.py</code> điều phối vòng huấn luyện,
+<code>evaluate.py</code> tính chỉ số và lưu dự đoán,
+<code>visualize.py</code> xuất learning curves.</p>
+<p>Sau khi chạy <code>python main.py</code>, các đầu ra chính gồm
+<code>data_summary.json</code>, <code>history.csv</code>,
+<code>loss_curves.png</code>, <code>test_metrics.json</code>,
+<code>classification_report.txt</code>,
+<code>confusion_matrix.csv</code>, <code>confusion_matrix.png</code>,
+<code>test_predictions.csv</code>, <code>run_info.json</code> và thư mục
+<code>best_model/</code>.</p>
+<p><code>run_info.json</code> lưu cấu hình, seed, phiên bản
+Python/PyTorch/Transformers và checkpoint được chọn. Những thông tin này
+giúp nhóm đối chiếu các lần chạy. Kết quả có thể chênh lệch giữa các máy
+do phần cứng, phiên bản thư viện và tính không xác định của một số phép
+toán.</p>
+<h2 id="nhận-xét">4. Nhận xét</h2>
+<p>Exercise 1 giúp nhóm hiểu cách một mô hình pretrained nhận đầu vào đã
+tokenize và trả về nhãn cảm xúc. Với Exercise 2, việc fine-tune cho phép
+điều chỉnh trọng số theo dữ liệu IMDb thay vì chỉ dùng mô hình phân loại
+có sẵn.</p>
+<p>Accuracy 89% của lần chạy được lưu cho thấy mô hình có khả năng phân
+loại phần lớn các nhận xét trong tập con thử nghiệm. Tuy nhiên, tập test
+chỉ gồm 200 mẫu nên chưa đủ để kết luận hiệu quả trên toàn bộ IMDb hoặc
+các loại văn bản khác. Thời gian huấn luyện và bộ nhớ là những hạn chế
+khi chạy mô hình Transformer trên CPU.</p>
+<h2 id="kết-luận">5. Kết luận</h2>
+<p>Lab 3 giới thiệu hai cách ứng dụng Hugging Face: sử dụng checkpoint
+đã fine-tune để dự đoán và fine-tuning pretrained model trên bộ dữ liệu
+có nhãn. Nhóm đã tổ chức các bước xử lý dữ liệu, huấn luyện và đánh giá
+thành các notebook và module để có thể thử nghiệm theo từng phần.</p>
+<h2 id="tài-liệu-tham-khảo">6. Tài liệu tham khảo</h2>
+<p>Tài liệu phân tích theo từng nội dung của nhóm:</p>
+<ul>
+<li><a href="sections/01_data.md">Dữ liệu và tiền xử lý</a></li>
+<li><a href="sections/02_model.md">Kiến trúc mô hình</a></li>
+<li><a href="sections/03_training.md">Huấn luyện</a></li>
+<li><a href="sections/04_evaluation.md">Đánh giá</a></li>
+<li><a href="sections/05_experiments.md">Thử nghiệm</a></li>
+<li><a href="sections/06_integration.md">Tích hợp và kiểm tra</a></li>
+</ul>
+<ol type="1">
+<li><a
+href="https://huggingface.co/docs/transformers/en/training#fine-tune-a-pretrained-model">Hugging
+Face – Fine-tuning a pretrained model</a>.</li>
+<li><a
+href="https://huggingface.co/blog/sentiment-analysis-python">Hugging
+Face – Getting Started with Sentiment Analysis using Python</a>.</li>
+<li><a
+href="https://www.kaggle.com/code/gauravduttakiit/sentiment-analysis-using-hugging-face">Kaggle
+– Sentiment Analysis using Hugging Face</a>.</li>
+<li><a
+href="https://www.kaggle.com/code/neerajmohan/fine-tuning-bert-for-text-classification">Kaggle
+– Fine-tuning BERT for Text Classification</a>.</li>
+</ol>
+</body>
+</html>

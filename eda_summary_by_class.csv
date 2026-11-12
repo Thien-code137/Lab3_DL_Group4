@@ -1,0 +1,3 @@
+﻿label,samples,mean_words,median_words,mean_characters,missing_text,duplicate_texts
+NEGATIVE,12500,228.48728,173.0,1279.5104,0,68
+POSITIVE,12500,234.486,172.0,1325.21536,0,28

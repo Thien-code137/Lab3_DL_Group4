@@ -1,0 +1,15 @@
+{
+  "source": "stanfordnlp/imdb",
+  "split": "train",
+  "sample_size": 1000,
+  "samples_per_class": 500,
+  "representation": "TF-IDF",
+  "max_features": 1000,
+  "pca_components": 2,
+  "explained_variance_ratio": [
+    0.009780838638637558,
+    0.007143755903334829
+  ],
+  "cumulative_explained_variance": 0.016924594541972385,
+  "random_seed": 42
+}

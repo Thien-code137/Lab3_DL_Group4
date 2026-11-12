@@ -1,0 +1,29 @@
+{
+  "dataset": "stanfordnlp/imdb",
+  "task": "binary sentiment classification",
+  "label_mapping": {
+    "0": "NEGATIVE",
+    "1": "POSITIVE"
+  },
+  "eda_pca": {
+    "source_split": "train",
+    "test_split_used_for_eda_or_pca": false,
+    "pca_sample_size": 1000,
+    "pca_samples_per_class": {
+      "NEGATIVE": 500,
+      "POSITIVE": 500
+    },
+    "random_seed": 42,
+    "features_for_pca": "TF-IDF text features",
+    "components": 2
+  },
+  "fine_tuning_counts_reported_in_existing_lab_artifacts": {
+    "train": 1000,
+    "validation": 200,
+    "test": 200
+  },
+  "notes": [
+    "The EDA/PCA notebook uses a balanced 1000-review sample from the original train split for PCA.",
+    "Fine-tuning counts above are copied from the existing notebook/report analysis and should be reconciled against the saved tokenized datasets if the notebook is later edited."
+  ]
+}

@@ -223,4 +223,168 @@ summary = evaluate_and_save(
 Hàm `evaluate_and_save()` từ `src/evaluate.py` thực hiện:
 
 - Tính Accuracy.
-- Tính Precision
+- Tính Precision, Recall và F1-score cho lớp Positive.
+- Tạo confusion matrix.
+- Xuất classification report.
+- Lưu dự đoán của từng mẫu test.
+- Lưu các kết quả đánh giá vào thư mục đầu ra.
+
+**Bước 9: Xuất mô hình tốt nhất**
+
+```python
+trainer.save_model(str(output / "best_model"))
+tokenizer.save_pretrained(str(output / "best_model"))
+```
+
+Mô hình và tokenizer được lưu vào:
+
+```text
+outputs/new_run/best_model/
+```
+
+Thư mục này có thể được sử dụng cho quá trình inference sau huấn luyện.
+
+**Bước 10: Lưu thông tin lần chạy**
+
+Chương trình tạo file `run_info.json`, bao gồm:
+
+| Trường | Nội dung |
+|---|---|
+| `started_at_utc` | Thời gian bắt đầu huấn luyện theo UTC |
+| `finished_at_utc` | Thời gian kết thúc huấn luyện theo UTC |
+| `config` | Cấu hình được sử dụng |
+| `python` | Phiên bản Python |
+| `pytorch` | Phiên bản PyTorch |
+| `transformers` | Phiên bản Transformers |
+| `device` | Thiết bị tính toán được TrainingArguments sử dụng |
+| `training_loss` | Training loss được Trainer báo cáo |
+| `best_checkpoint` | Đường dẫn checkpoint được lựa chọn |
+| `best_val_loss` | Giá trị chỉ số lựa chọn checkpoint được Trainer ghi nhận |
+
+Cuối cùng, chương trình in kết quả đánh giá dưới dạng JSON, in đường dẫn thư mục lưu kết quả và trả về `summary`.
+
+## 4. Cách chạy chương trình
+
+Sử dụng cấu hình và thư mục đầu ra mặc định:
+
+```bash
+python -m src.train
+```
+
+Chỉ định file cấu hình:
+
+```bash
+python -m src.train --config configs/default.json
+```
+
+Chỉ định thư mục lưu kết quả:
+
+```bash
+python -m src.train --output outputs/experiment_01
+```
+
+Kết hợp cả hai tham số:
+
+```bash
+python -m src.train --config configs/default.json --output outputs/experiment_01
+```
+
+Có thể sử dụng `python src/train.py` khi chạy từ thư mục gốc của repository và môi trường Python nhận diện được package `src`.
+
+## 5. Các kết quả đầu ra
+
+Với thư mục đầu ra mặc định `outputs/new_run`, module tạo hoặc sử dụng các thành phần sau:
+
+| Đường dẫn | Nội dung |
+|---|---|
+| `data_summary.json` | Thống kê số lượng mẫu và nhãn của ba tập dữ liệu |
+| `checkpoints/` | Các checkpoint được lưu trong quá trình huấn luyện |
+| `best_model/` | Mô hình và tokenizer sau khi khôi phục checkpoint tốt nhất |
+| `run_info.json` | Cấu hình, phiên bản thư viện, thời gian và thông tin huấn luyện |
+| Các file lịch sử huấn luyện | Được tạo thông qua `save_training_history()` |
+| `test_metrics.json` | Các chỉ số đánh giá trên tập test |
+| `confusion_matrix.csv` | Ma trận nhầm lẫn dạng CSV |
+| `confusion_matrix.png` | Hình ảnh ma trận nhầm lẫn |
+| `classification_report.txt` | Báo cáo phân loại |
+| `test_predictions.csv` | Dự đoán của mô hình cho từng mẫu test |
+
+Các file đánh giá được tạo thông qua `evaluate_and_save()` trong `src/evaluate.py`.
+
+## 6. Luồng hoạt động tổng thể
+
+```text
+configs/default.json
+        |
+        v
+   Đọc cấu hình
+        |
+        v
+  Chuẩn bị dữ liệu IMDb
+        |
+        v
+ Train / Validation / Test
+        |
+        v
+ Tải Tokenizer và DistilBERT
+        |
+        v
+     Tokenization
+        |
+        v
+  Khởi tạo Hugging Face Trainer
+        |
+        v
+     Fine-tuning
+        |
+        v
+ Đánh giá trên Validation
+        |
+        v
+ Lựa chọn checkpoint tốt nhất
+        |
+        v
+ Khôi phục checkpoint tốt nhất
+        |
+        v
+ Dự đoán trên tập Test
+        |
+        v
+ Tính metrics và lưu kết quả
+        |
+        v
+ Xuất best_model và run_info.json
+```
+
+## 7. Vai trò trong hệ thống
+
+`train.py` là module trung tâm kết nối các thành phần của Lab3.
+
+Module không tự triển khai riêng thuật toán Transformer hay các hàm tính metrics mà sử dụng những module chuyên biệt:
+
+- `data.py`: Chuẩn bị dữ liệu.
+- `model.py`: Tải tokenizer và mô hình.
+- `evaluate.py`: Đánh giá kết quả.
+- `utils.py`: Đọc cấu hình và lưu JSON.
+- `visualize.py`: Lưu lịch sử huấn luyện.
+
+Cách tổ chức này giúp tách biệt các nhiệm vụ, dễ theo dõi, kiểm thử và bảo trì code.
+
+## 8. Lưu ý về lựa chọn checkpoint
+
+Trong code hiện tại, cấu hình được sử dụng là:
+
+```python
+metric_for_best_model=config["selection_metric"],
+greater_is_better=False
+```
+
+Điều này có nghĩa Trainer sẽ ưu tiên checkpoint có giá trị **nhỏ hơn** đối với chỉ số được lựa chọn.
+
+Vì vậy, cần kiểm tra `selection_metric` trong `configs/default.json`:
+
+- Nếu sử dụng `eval_loss`, thiết lập `greater_is_better=False` là phù hợp.
+- Nếu sử dụng `eval_accuracy`, cần đặt `greater_is_better=True` để ưu tiên accuracy cao hơn.
+
+Ngoài ra, giá trị `trainer.state.best_metric` được truyền vào tham số `best_val_loss` của `evaluate_and_save()`. Vì vậy, giá trị được lưu dưới tên `best_val_loss` chỉ thực sự là validation loss khi `selection_metric` là `eval_loss`.
+
+Cần bảo đảm cấu hình lựa chọn checkpoint đúng với mục tiêu đánh giá của nhóm để tránh chọn nhầm mô hình tốt nhất.

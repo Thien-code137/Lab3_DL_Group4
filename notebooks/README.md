@@ -1,11 +1,16 @@
-# Notebook Lab 3
+# Notebook — Practice 3
 
-| Notebook | Nội dung | Kết quả cần quan sát |
-|---|---|---|
-| `01_eda_pca.ipynb` | EDA tập train IMDb, TF-IDF và PCA | Phân phối nhãn, độ dài review, PCA 2D và explained variance |
-| `02_exercise1_sentiment.ipynb` | Tokenize câu và suy luận bằng model pretrained | Tokens, nhãn, điểm softmax |
-| `03_exercise2_finetuning.ipynb` | Cấu hình Trainer, fine-tune và đánh giá | Train log, best checkpoint và metrics test |
+| Phần | Nội dung |
+|---|---|
+| A | Chuẩn bị môi trường, tải IMDb, thống kê, EDA và PCA trên TF-IDF |
+| B / Exercise 1 | Pretrained sentiment, tokenize câu, dự đoán và hiển thị score |
+| C / Exercise 2 | Tải model, chia data, tokenize, TrainingArguments, Trainer, train, test, checkpoint, prediction |
+| D | Đối chiếu các kết quả cũ, kiểm tra file đầu ra và kết luận |
 
-Nên chạy lần lượt theo thứ tự từ trên xuống trong cùng một môi trường Python. Chọn kernel đã cài các thư viện trong `requirements.txt`.
+- Cài `python -m pip install -r requirements.txt` trong terminal ở thư mục gốc.
+- Mở notebook, chọn đúng Python Kernel, chạy từ cell đầu tiên đến cuối.
+- Ở Codespaces thông thường notebook tải dữ liệu/model qua mạng và chạy huấn luyện. Chế độ `LAB3_OFFLINE_VERIFY=1` chỉ kiểm tra file đã lưu, không train.
+- Output được lưu trong notebook ở lần bàn giao này là **kiểm chứng ngoại tuyến**: 20/20 code cells chạy thành công, không phải bằng chứng đã fine-tune lại.
+- Notebook cũ nằm ở `legacy/notebooks/` nhằm giữ lại bài làm/bằng chứng cũ.
 
-`03_exercise2_finetuning.ipynb` có cell `trainer.train()` nên sẽ thực hiện huấn luyện khi chạy; không nên dùng nút Run All nếu chưa chuẩn bị thời gian và tài nguyên.
+Đọc thêm [docs/README.md](../docs/README.md) để hiểu từng bước.

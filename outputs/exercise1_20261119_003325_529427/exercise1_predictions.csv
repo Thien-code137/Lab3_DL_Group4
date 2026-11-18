@@ -1,0 +1,4 @@
+﻿text,predicted_label,score
+I love this movie. The acting is amazing!,POSITIVE,0.999881
+This movie is extremely boring and disappointing.,NEGATIVE,0.999794
+"The visuals were good, although the story was weak.",POSITIVE,0.999764

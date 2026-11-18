@@ -1,0 +1,16 @@
+{
+  "train": {
+    "rows_before": 25000,
+    "empty_text": 0,
+    "duplicate_texts": 98,
+    "conflicting_text_groups": 0,
+    "rows_after": 24902
+  },
+  "test": {
+    "rows_before": 25000,
+    "empty_text": 0,
+    "duplicate_texts": 201,
+    "conflicting_text_groups": 0,
+    "rows_after": 24799
+  }
+}

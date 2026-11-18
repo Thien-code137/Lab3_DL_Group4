@@ -1,0 +1,3 @@
+epoch,validation_loss,validation_accuracy,source,notes
+1,0.283972,0.905,existing_notebook_report,"Lowest validation loss recorded; checkpoint selection criterion was reported as validation accuracy"
+2,0.299779,0.895,existing_notebook_report,"Existing run; do not infer additional training steps from this summary"

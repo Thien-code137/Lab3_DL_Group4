@@ -1,0 +1,19 @@
+{
+  "exercise": "Exercise 2 - DistilBERT fine-tuning on IMDb",
+  "test_metrics_reported": {
+    "accuracy": 0.89,
+    "positive_class_f1": 0.9018
+  },
+  "reported_test_sample_count": 200,
+  "source_artifacts": [
+    "outputs/exercise2/test_metrics.json",
+    "outputs/exercise2/classification_report.txt",
+    "outputs/exercise2/test_predictions.csv",
+    "outputs/exercise2/confusion_matrix.csv",
+    "outputs/exercise2/confusion_matrix.png"
+  ],
+  "notes": [
+    "Only the metrics explicitly identified in the reviewed Lab3 artifacts are included here.",
+    "For a full classification report, consult the source files listed above rather than treating omitted metrics as zero."
+  ]
+}

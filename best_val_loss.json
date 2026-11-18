@@ -1,0 +1,22 @@
+
+{
+  "experiment": "Lab3 Exercise 2 - DistilBERT Fine-tuning",
+  "validation_history": [
+    {
+      "epoch": 1,
+      "validation_loss": 0.283972,
+      "validation_accuracy": 0.905
+    },
+    {
+      "epoch": 2,
+      "validation_loss": 0.299779,
+      "validation_accuracy": 0.895
+    }
+  ],
+  "best_validation_loss": 0.283972,
+  "best_validation_loss_epoch": 1,
+  "selected_checkpoint": "checkpoint-125",
+  "checkpoint_selection_metric": "validation_accuracy",
+  "best_validation_accuracy": 0.905,
+  "note": "Values are transcribed from the existing Lab3 report and experiment outputs, not from a new training run. Checkpoint selection used validation accuracy, while the lowest validation loss occurred at epoch 1."
+}
